@@ -8,37 +8,40 @@ Understanding election processes, voting rights, and democratic terminology can 
 
 This application provides a simple, interactive, and offline-capable solution to:
 1. Educate users on over 30+ election-related topics using an intelligent chatbot.
-2. Allow users to simulate election scenarios using a transparent, weighted prediction model.
+2. Educate first-time voters on the step-by-step voting process.
+3. Test users' knowledge with an interactive Election Quiz.
+4. Raise awareness on how to spot and verify fake election news.
+5. Allow users to simulate election scenarios using a transparent, weighted prediction model with chart visualizations.
 
 ## Features
 
-* **Election Education Chatbot**: 
-  * Answers questions on topics like EVM, VVPAT, NOTA, Model Code of Conduct, Voter IDs, and more.
-  * Uses keyword matching, fuzzy logic (via `thefuzz`), and category-based fallback mechanisms to ensure users always receive helpful responses, rather than a generic "I don't know."
+* **Election Education Chatbot**: Answers questions on topics like EVM, VVPAT, NOTA, Model Code of Conduct, Voter IDs, and more using keyword matching and fuzzy logic.
+* **First-Time Voter Guide**: A clear 5-step guide outlining how to register and cast a vote in India.
+* **Election & Democracy Quiz**: A built-in 5-question quiz to test civic knowledge.
+* **Fake Election News Awareness**: Tips and guidelines on how to verify information during election seasons.
 * **Election Outcome Predictor**:
-  * Calculates a weighted score based on multiple user inputs: Current estimate (50%), Previous share (20%), Campaign score (10%), Youth support (5%), Women support (5%), Urban support (5%), and Rural support (5%).
-  * Calculates predicted vote share, winning margins, and provides a dynamic confidence level (Low/Medium/High).
-* **Modern UI/UX**: Clean, responsive, glassmorphism-inspired design using vanilla CSS.
-* **100% Offline/Rule-Based**: Requires no external AI API keys (like OpenAI or Gemini), ensuring zero running costs for inference and high privacy.
+  * Calculates a weighted score based on multiple user inputs (Current estimate, Previous share, Campaign score, Youth/Women/Urban/Rural support).
+  * Visualizes the predicted vote share using **Chart.js**.
+  * Explains the calculation methodology clearly via an info toggle.
+  * Allows downloading the prediction report as a `.txt` file locally.
+* **Modern UI/UX**: Professional glassmorphism-inspired design with responsive grids and interactive elements.
+* **100% Offline/Rule-Based**: Requires no external AI API keys (like OpenAI or Gemini) and no databases, ensuring zero running costs for inference and high privacy.
 
 ## Tech Stack
 
 * **Backend**: Python, Flask, `thefuzz` (for string similarity)
-* **Frontend**: HTML5, CSS3, Vanilla JavaScript
-* **Deployment Ready**: Docker, Gunicorn (optimized for Google Cloud Run)
+* **Frontend**: HTML5, CSS3, Vanilla JavaScript, Chart.js (via CDN)
+* **Deployment Ready**: Docker, Gunicorn (Optimized for Render / Google Cloud Run)
 
 ## How It Works
 
 ### The Chatbot
-The chatbot relies on a predefined `KNOWLEDGE_BASE` dictionary in `app.py`. When a user asks a question:
-1. It first checks for an exact keyword match.
-2. If no exact match is found, it uses Levenshtein Distance (via `thefuzz`) to find the closest matching question in the knowledge base.
-3. If the confidence score is too low, it checks a `CATEGORIES` dictionary to see if the user mentioned a broad topic (e.g., "machines" for EVM) and gives a guided fallback answer.
+The chatbot relies on a predefined `KNOWLEDGE_BASE` dictionary in `app.py`. When a user asks a question, it checks for keyword matches or uses Levenshtein Distance (via `thefuzz`) to find the closest match.
 
 ### The Predictor
-The predictor takes numerical inputs from the frontend and applies a hardcoded weighted formula to calculate an overall "score" for each candidate. The scores are then normalized into a percentage to estimate the final vote share.
+The predictor takes numerical inputs from the frontend and applies a hardcoded weighted formula to calculate an overall "score" for each candidate. The scores are normalized into a percentage. Chart.js is used to render the bar chart, and JavaScript generates the text file blob for the downloadable report directly in the browser.
 
-⚠️ **Disclaimer:** *This prediction is only an estimate based on the entered data and should not be treated as an actual election result.*
+⚠️ **Disclaimer:** *This prediction is only an estimate based on user-entered data and should not be treated as an actual election result.*
 
 ## How to Run Locally
 
@@ -62,24 +65,22 @@ The predictor takes numerical inputs from the frontend and applies a hardcoded w
    ```
 5. Open your browser and navigate to `http://localhost:8080`.
 
-## How to Deploy on Google Cloud Run
+## How to Deploy on Render
 
-This project includes a `Dockerfile` and is ready for containerized deployment.
+This project includes a `Dockerfile` and `requirements.txt` making it extremely easy to deploy on Render's free tier.
 
-1. Install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install).
-2. Authenticate and set your project:
-   ```bash
-   gcloud auth login
-   gcloud config set project YOUR_PROJECT_ID
-   ```
-3. Deploy directly using Cloud Run:
-   ```bash
-   gcloud run deploy election-assistant --source . --region us-central1 --allow-unauthenticated
-   ```
-4. Once deployed, the CLI will provide a public URL to access your application.
+1. Create a [Render](https://render.com/) account.
+2. Click **New +** and select **Web Service**.
+3. Connect your GitHub repository containing this code.
+4. Render will automatically detect the Python environment.
+5. Set the **Build Command** to: `pip install -r requirements.txt`
+6. Set the **Start Command** to: `gunicorn app:app`
+7. Click **Create Web Service**. 
+
+Alternatively, if you prefer Docker, Render will automatically use the provided `Dockerfile`.
 
 ## Screenshots
 
 *(Placeholder for Screenshots)*
-- `chatbot_demo.png`
-- `predictor_results.png`
+- `dashboard_view.png`
+- `predictor_chart.png`

@@ -5,154 +5,277 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Election Process AI Assistant & Predictor</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <header>
-        <h1>🗳️ Election Process AI Assistant</h1>
-        <p>Learn about democracy, electoral processes, and predict outcomes.</p>
+    <header class="glass-header">
+        <div class="header-content">
+            <h1>🗳️ Election Process AI Assistant</h1>
+            <p>Empowering citizens through education, verification, and data-driven prediction.</p>
+        </div>
     </header>
 
-    <div class="container">
-        <!-- Chatbot Section -->
-        <div class="card">
-            <h2>💬 Election Knowledge Assistant</h2>
-            <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
-                Ask me about voting, EVMs, the Election Commission, and more!
-            </p>
-            
-            <div class="chat-window" id="chat-window">
-                <!-- Chat messages will appear here -->
+    <div class="main-container">
+        <!-- Sidebar: Assistant & Learning -->
+        <div class="column-left">
+            <!-- Chatbot Section -->
+            <div class="card glass-card">
+                <h2>💬 Election Knowledge Assistant</h2>
+                <p class="section-desc">
+                    Ask me about voting, EVMs, the Election Commission, and more!
+                </p>
+                
+                <div class="chat-window" id="chat-window">
+                    <!-- Chat messages will appear here -->
+                </div>
+                
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="e.g., What is VVPAT?">
+                    <button id="send-btn" class="btn-primary">Send</button>
+                </div>
             </div>
-            
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="e.g., What is VVPAT?">
-                <button id="send-btn">Send</button>
+
+            <!-- First-Time Voter Guide -->
+            <div class="card glass-card">
+                <h2>📝 First-Time Voter Guide</h2>
+                <div class="voter-guide">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div class="step-content">
+                            <h4>Check Eligibility</h4>
+                            <p>You must be an Indian citizen and 18+ years old on the qualifying date (usually Jan 1st).</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div class="step-content">
+                            <h4>Register Online/Offline</h4>
+                            <p>Fill out Form 6 on the NVSP portal (voters.eci.gov.in) or submit it to your local ERO.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div class="step-content">
+                            <h4>Get Voter ID (EPIC)</h4>
+                            <p>Once verified, your name is added to the electoral roll and you receive your Voter ID.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4</div>
+                        <div class="step-content">
+                            <h4>Find Polling Booth</h4>
+                            <p>Check the ECI website or app to find your designated polling station and booth slip.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">5</div>
+                        <div class="step-content">
+                            <h4>Cast Your Vote</h4>
+                            <p>Take your ID to the booth, verify identity, press the EVM button, and check the VVPAT slip.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fake News Awareness -->
+            <div class="card glass-card fake-news-section">
+                <h2>🛑 Fake Election News Awareness</h2>
+                <p class="section-desc">Misinformation can derail democracy. Learn how to spot fake news.</p>
+                <ul class="fake-news-tips">
+                    <li><strong>Verify the Source:</strong> Is it a reputed news outlet or an unverified WhatsApp forward?</li>
+                    <li><strong>Check for Emotion:</strong> Fake news often uses highly emotive language to spark outrage.</li>
+                    <li><strong>Reverse Image Search:</strong> Images and videos are often taken out of context. Use tools like Google Lens to trace origins.</li>
+                    <li><strong>Check Dates:</strong> Old news is frequently recycled as "breaking" news during election time.</li>
+                    <li><strong>Consult Fact-Checkers:</strong> Follow ECI verified handles and recognized fact-checking websites.</li>
+                </ul>
             </div>
         </div>
 
-        <!-- Predictor Section -->
-        <div class="card">
-            <h2>📊 Election Outcome Predictor</h2>
-            <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
-                Enter candidate data to estimate election outcomes based on a weighted scoring model.
-            </p>
-
-            <div id="candidates-container">
-                <!-- Default 2 candidates -->
-                <div class="candidate-form" id="candidate-1">
-                    <div class="form-group">
-                        <label>Candidate / Party Name</label>
-                        <input type="text" class="c-name" placeholder="e.g., Party A" required>
-                    </div>
-                    <div class="grid-2-col">
-                        <div class="form-group">
-                            <label>Current Vote Estimate</label>
-                            <input type="number" class="c-current" step="0.01" value="0" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Previous Election Share (%)</label>
-                            <input type="number" class="c-prev" step="0.01" value="0">
-                        </div>
-                    </div>
-                    <div class="grid-4-col">
-                        <div class="form-group">
-                            <label>Campaign Score (0-100)</label>
-                            <input type="number" class="c-camp" step="1" value="50">
-                        </div>
-                        <div class="form-group">
-                            <label>Youth Support (%)</label>
-                            <input type="number" class="c-youth" step="0.01" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Women Support (%)</label>
-                            <input type="number" class="c-women" step="0.01" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Urban Support (%)</label>
-                            <input type="number" class="c-urban" step="0.01" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Rural Support (%)</label>
-                            <input type="number" class="c-rural" step="0.01" value="0">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="candidate-form" id="candidate-2">
-                    <div class="form-group">
-                        <label>Candidate / Party Name</label>
-                        <input type="text" class="c-name" placeholder="e.g., Party B" required>
-                    </div>
-                    <div class="grid-2-col">
-                        <div class="form-group">
-                            <label>Current Vote Estimate</label>
-                            <input type="number" class="c-current" step="0.01" value="0" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Previous Election Share (%)</label>
-                            <input type="number" class="c-prev" step="0.01" value="0">
-                        </div>
-                    </div>
-                    <div class="grid-4-col">
-                        <div class="form-group">
-                            <label>Campaign Score (0-100)</label>
-                            <input type="number" class="c-camp" step="1" value="50">
-                        </div>
-                        <div class="form-group">
-                            <label>Youth Support (%)</label>
-                            <input type="number" class="c-youth" step="0.01" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Women Support (%)</label>
-                            <input type="number" class="c-women" step="0.01" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Urban Support (%)</label>
-                            <input type="number" class="c-urban" step="0.01" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Rural Support (%)</label>
-                            <input type="number" class="c-rural" step="0.01" value="0">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button id="add-candidate-btn" class="add-btn">+ Add Another Candidate</button>
-            <button id="predict-btn" class="predict-btn">Calculate Prediction</button>
-
-            <!-- Results Section -->
-            <div id="results-container" class="results-container">
-                <h3>🏆 Prediction Results</h3>
-                <p><strong>Predicted Winner:</strong> <span id="predicted-winner"></span> <span id="confidence-level" class="confidence-badge"></span></p>
-                <p id="explanation" style="margin-top: 0.5rem;"></p>
-
-                <table id="results-table">
-                    <thead>
-                        <tr>
-                            <th>Candidate</th>
-                            <th>Input Base</th>
-                            <th>Predicted Share</th>
-                            <th>Weighted Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows populated by JS -->
-                    </tbody>
-                </table>
+        <!-- Main Column: Predictor & Quiz -->
+        <div class="column-right">
+            <!-- Election Quiz Section -->
+            <div class="card glass-card quiz-section">
+                <h2>🎯 Election & Democracy Quiz</h2>
+                <p class="section-desc" id="quiz-intro">Test your knowledge of the democratic process!</p>
                 
-                <div class="disclaimer">
-                    <strong>⚠️ Disclaimer:</strong> This prediction is only an estimate based on the entered data and should not be treated as an actual election result. It is for educational purposes only.
+                <div id="quiz-container">
+                    <button id="start-quiz-btn" class="btn-secondary">Start Quiz</button>
+                    
+                    <div id="quiz-content" style="display: none;">
+                        <h4 id="question-text" class="question-text"></h4>
+                        <div id="options-container" class="options-container">
+                            <!-- Options will be injected here -->
+                        </div>
+                        <div class="quiz-footer">
+                            <span id="quiz-progress">Question 1/5</span>
+                            <button id="next-question-btn" class="btn-primary" style="display: none;">Next</button>
+                        </div>
+                    </div>
+                    
+                    <div id="quiz-results" style="display: none;">
+                        <h3 class="score-title">Quiz Completed!</h3>
+                        <div class="score-display">
+                            <span id="final-score">0</span> / 5
+                        </div>
+                        <p id="score-message"></p>
+                        <button id="restart-quiz-btn" class="btn-secondary">Restart Quiz</button>
+                    </div>
                 </div>
             </div>
 
+            <!-- Predictor Section -->
+            <div class="card glass-card predictor-section">
+                <div class="predictor-header">
+                    <h2>📊 Election Outcome Predictor</h2>
+                    <button id="toggle-explanation-btn" class="btn-icon" title="How it works">ℹ️ How it works</button>
+                </div>
+                <p class="section-desc">
+                    Enter candidate data to estimate election outcomes based on our weighted model.
+                </p>
+
+                <!-- Explanation Accordion -->
+                <div id="prediction-explanation" class="explanation-box" style="display: none;">
+                    <h4>How the Prediction Works:</h4>
+                    <p>The model uses a weighted formula to calculate a total score for each candidate, which is then normalized into a predicted vote share percentage. The weights are:</p>
+                    <ul>
+                        <li><strong>Current Vote Estimate:</strong> 50% (Base popularity metric)</li>
+                        <li><strong>Previous Share:</strong> 20% (Historical performance baseline)</li>
+                        <li><strong>Campaign Score:</strong> 10% (Momentum and outreach quality)</li>
+                        <li><strong>Youth/Women/Urban/Rural Support:</strong> 5% each (Demographic impact metrics)</li>
+                    </ul>
+                </div>
+
+                <div id="candidates-container">
+                    <!-- Default 2 candidates -->
+                    <div class="candidate-form" id="candidate-1">
+                        <div class="form-group">
+                            <label>Candidate / Party Name</label>
+                            <input type="text" class="c-name" placeholder="e.g., Party A" required>
+                        </div>
+                        <div class="grid-2-col">
+                            <div class="form-group">
+                                <label>Current Vote Estimate</label>
+                                <input type="number" class="c-current" step="0.01" value="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Previous Election Share (%)</label>
+                                <input type="number" class="c-prev" step="0.01" value="0">
+                            </div>
+                        </div>
+                        <div class="grid-4-col">
+                            <div class="form-group">
+                                <label>Campaign Score (0-100)</label>
+                                <input type="number" class="c-camp" step="1" value="50">
+                            </div>
+                            <div class="form-group">
+                                <label>Youth Support (%)</label>
+                                <input type="number" class="c-youth" step="0.01" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Women Support (%)</label>
+                                <input type="number" class="c-women" step="0.01" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Urban Support (%)</label>
+                                <input type="number" class="c-urban" step="0.01" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Rural Support (%)</label>
+                                <input type="number" class="c-rural" step="0.01" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="candidate-form" id="candidate-2">
+                        <div class="form-group">
+                            <label>Candidate / Party Name</label>
+                            <input type="text" class="c-name" placeholder="e.g., Party B" required>
+                        </div>
+                        <div class="grid-2-col">
+                            <div class="form-group">
+                                <label>Current Vote Estimate</label>
+                                <input type="number" class="c-current" step="0.01" value="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Previous Election Share (%)</label>
+                                <input type="number" class="c-prev" step="0.01" value="0">
+                            </div>
+                        </div>
+                        <div class="grid-4-col">
+                            <div class="form-group">
+                                <label>Campaign Score (0-100)</label>
+                                <input type="number" class="c-camp" step="1" value="50">
+                            </div>
+                            <div class="form-group">
+                                <label>Youth Support (%)</label>
+                                <input type="number" class="c-youth" step="0.01" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Women Support (%)</label>
+                                <input type="number" class="c-women" step="0.01" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Urban Support (%)</label>
+                                <input type="number" class="c-urban" step="0.01" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Rural Support (%)</label>
+                                <input type="number" class="c-rural" step="0.01" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="add-candidate-btn" class="btn-outline">+ Add Candidate</button>
+                    <button id="predict-btn" class="btn-accent">Calculate Prediction</button>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results-container" class="results-container">
+                    <div class="results-header">
+                        <h3>🏆 Prediction Results</h3>
+                        <button id="download-report-btn" class="btn-secondary btn-sm">⬇️ Download Report (.txt)</button>
+                    </div>
+                    
+                    <p class="winner-announcement"><strong>Predicted Winner:</strong> <span id="predicted-winner"></span> <span id="confidence-level" class="confidence-badge"></span></p>
+                    <p id="explanation" class="result-explanation"></p>
+
+                    <!-- Chart.js Canvas -->
+                    <div class="chart-container" style="position: relative; height:300px; width:100%; margin: 20px 0;">
+                        <canvas id="resultsChart"></canvas>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Candidate</th>
+                                    <th>Base Est.</th>
+                                    <th>Pred. Share</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="disclaimer">
+                        <strong>⚠️ Disclaimer:</strong> This prediction is only an estimate based on user-entered data and is not an official election result.
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
     <footer>
-        <p>Built for Hack2skill Challenge 2. No external APIs used. 100% Rule-based and Offline ready.</p>
+        <p>Built for Hack2skill Challenge 2. No paid APIs used. 100% Free & Offline ready.</p>
     </footer>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
