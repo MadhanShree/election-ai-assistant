@@ -190,39 +190,39 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
             <div class="candidate-form" id="candidate-${index}">
                 <div class="form-group">
-                    <label>Candidate / Party Name</label>
-                    <input type="text" class="c-name" placeholder="e.g., Party A" required>
+                    <label for="c-name-${index}">Candidate / Party Name</label>
+                    <input type="text" id="c-name-${index}" class="c-name" placeholder="e.g., Party A" required aria-required="true">
                 </div>
                 <div class="grid-2-col">
                     <div class="form-group">
-                        <label>Current Vote Estimate (e.g. 45000 or 45.5)</label>
-                        <input type="number" class="c-current" step="0.01" value="0" required>
+                        <label for="c-current-${index}">Current Vote Estimate</label>
+                        <input type="number" id="c-current-${index}" class="c-current" step="0.01" value="0" required aria-required="true">
                     </div>
                     <div class="form-group">
-                        <label>Previous Election Share (%)</label>
-                        <input type="number" class="c-prev" step="0.01" value="0">
+                        <label for="c-prev-${index}">Previous Election Share (%)</label>
+                        <input type="number" id="c-prev-${index}" class="c-prev" step="0.01" value="0">
                     </div>
                 </div>
                 <div class="grid-4-col">
                     <div class="form-group">
-                        <label>Campaign Score (0-100)</label>
-                        <input type="number" class="c-camp" step="1" value="50">
+                        <label for="c-camp-${index}">Campaign Score (0-100)</label>
+                        <input type="number" id="c-camp-${index}" class="c-camp" step="1" value="50">
                     </div>
                     <div class="form-group">
-                        <label>Youth Support (%)</label>
-                        <input type="number" class="c-youth" step="0.01" value="0">
+                        <label for="c-youth-${index}">Youth Support (%)</label>
+                        <input type="number" id="c-youth-${index}" class="c-youth" step="0.01" value="0">
                     </div>
                     <div class="form-group">
-                        <label>Women Support (%)</label>
-                        <input type="number" class="c-women" step="0.01" value="0">
+                        <label for="c-women-${index}">Women Support (%)</label>
+                        <input type="number" id="c-women-${index}" class="c-women" step="0.01" value="0">
                     </div>
                     <div class="form-group">
-                        <label>Urban Support (%)</label>
-                        <input type="number" class="c-urban" step="0.01" value="0">
+                        <label for="c-urban-${index}">Urban Support (%)</label>
+                        <input type="number" id="c-urban-${index}" class="c-urban" step="0.01" value="0">
                     </div>
                      <div class="form-group">
-                        <label>Rural Support (%)</label>
-                        <input type="number" class="c-rural" step="0.01" value="0">
+                        <label for="c-rural-${index}">Rural Support (%)</label>
+                        <input type="number" id="c-rural-${index}" class="c-rural" step="0.01" value="0">
                     </div>
                 </div>
             </div>

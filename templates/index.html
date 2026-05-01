@@ -13,76 +13,77 @@
 
     <header class="glass-header">
         <div class="header-content">
-            <h1>🗳️ Election Process AI Assistant</h1>
+            <h1><span aria-hidden="true">🗳️</span> Election Process AI Assistant</h1>
             <p>Empowering citizens through education, verification, and data-driven prediction.</p>
         </div>
     </header>
 
-    <div class="main-container">
+    <main class="main-container">
         <!-- Sidebar: Assistant & Learning -->
         <div class="column-left">
             <!-- Chatbot Section -->
-            <div class="card glass-card">
-                <h2>💬 Election Knowledge Assistant</h2>
+            <section class="card glass-card" aria-labelledby="chatbot-heading">
+                <h2 id="chatbot-heading"><span aria-hidden="true">💬</span> Election Knowledge Assistant</h2>
                 <p class="section-desc">
                     Ask me about voting, EVMs, the Election Commission, and more!
                 </p>
                 
-                <div class="chat-window" id="chat-window">
+                <div class="chat-window" id="chat-window" aria-live="polite" aria-atomic="false">
                     <!-- Chat messages will appear here -->
                 </div>
                 
                 <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="e.g., What is VVPAT?">
-                    <button id="send-btn" class="btn-primary">Send</button>
+                    <label for="chat-input" class="sr-only" style="display:none;">Type your question</label>
+                    <input type="text" id="chat-input" placeholder="e.g., What is VVPAT?" aria-label="Type your question about elections">
+                    <button id="send-btn" class="btn-primary" aria-label="Send message">Send</button>
                 </div>
-            </div>
+            </section>
 
             <!-- First-Time Voter Guide -->
-            <div class="card glass-card">
-                <h2>📝 First-Time Voter Guide</h2>
+            <section class="card glass-card" aria-labelledby="guide-heading">
+                <h2 id="guide-heading"><span aria-hidden="true">📝</span> First-Time Voter Guide</h2>
                 <div class="voter-guide">
                     <div class="step">
-                        <div class="step-num">1</div>
+                        <div class="step-num" aria-hidden="true">1</div>
                         <div class="step-content">
-                            <h4>Check Eligibility</h4>
+                            <h3>Check Eligibility</h3>
                             <p>You must be an Indian citizen and 18+ years old on the qualifying date (usually Jan 1st).</p>
                         </div>
                     </div>
                     <div class="step">
-                        <div class="step-num">2</div>
+                        <div class="step-num" aria-hidden="true">2</div>
                         <div class="step-content">
-                            <h4>Register Online/Offline</h4>
+                            <h3>Register Online/Offline</h3>
                             <p>Fill out Form 6 on the NVSP portal (voters.eci.gov.in) or submit it to your local ERO.</p>
                         </div>
                     </div>
                     <div class="step">
-                        <div class="step-num">3</div>
+                        <div class="step-num" aria-hidden="true">3</div>
                         <div class="step-content">
-                            <h4>Get Voter ID (EPIC)</h4>
+                            <h3>Get Voter ID (EPIC)</h3>
                             <p>Once verified, your name is added to the electoral roll and you receive your Voter ID.</p>
                         </div>
                     </div>
                     <div class="step">
-                        <div class="step-num">4</div>
+                        <div class="step-num" aria-hidden="true">4</div>
                         <div class="step-content">
-                            <h4>Find Polling Booth</h4>
+                            <h3>Find Polling Booth</h3>
                             <p>Check the ECI website or app to find your designated polling station and booth slip.</p>
                         </div>
                     </div>
                     <div class="step">
-                        <div class="step-num">5</div>
+                        <div class="step-num" aria-hidden="true">5</div>
                         <div class="step-content">
-                            <h4>Cast Your Vote</h4>
+                            <h3>Cast Your Vote</h3>
                             <p>Take your ID to the booth, verify identity, press the EVM button, and check the VVPAT slip.</p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Fake News Awareness -->
-            <div class="card glass-card fake-news-section">
-                <h2>🛑 Fake Election News Awareness</h2>
+            <section class="card glass-card fake-news-section" aria-labelledby="fake-news-heading">
+                <h2 id="fake-news-heading"><span aria-hidden="true">🛑</span> Fake Election News Awareness</h2>
                 <p class="section-desc">Misinformation can derail democracy. Learn how to spot fake news.</p>
                 <ul class="fake-news-tips">
                     <li><strong>Verify the Source:</strong> Is it a reputed news outlet or an unverified WhatsApp forward?</li>
@@ -91,46 +92,48 @@
                     <li><strong>Check Dates:</strong> Old news is frequently recycled as "breaking" news during election time.</li>
                     <li><strong>Consult Fact-Checkers:</strong> Follow ECI verified handles and recognized fact-checking websites.</li>
                 </ul>
-            </div>
+            </section>
         </div>
 
         <!-- Main Column: Predictor & Quiz -->
         <div class="column-right">
             <!-- Election Quiz Section -->
-            <div class="card glass-card quiz-section">
-                <h2>🎯 Election & Democracy Quiz</h2>
+            <section class="card glass-card quiz-section" aria-labelledby="quiz-heading">
+                <h2 id="quiz-heading"><span aria-hidden="true">🎯</span> Election & Democracy Quiz</h2>
                 <p class="section-desc" id="quiz-intro">Test your knowledge of the democratic process!</p>
                 
-                <div id="quiz-container">
-                    <button id="start-quiz-btn" class="btn-secondary">Start Quiz</button>
+                <div id="quiz-container" aria-live="polite">
+                    <button id="start-quiz-btn" class="btn-secondary" aria-label="Start the election quiz">Start Quiz</button>
                     
                     <div id="quiz-content" style="display: none;">
-                        <h4 id="question-text" class="question-text"></h4>
-                        <div id="options-container" class="options-container">
+                        <h3 id="question-text" class="question-text"></h3>
+                        <div id="options-container" class="options-container" role="group" aria-labelledby="question-text">
                             <!-- Options will be injected here -->
                         </div>
                         <div class="quiz-footer">
-                            <span id="quiz-progress">Question 1/5</span>
-                            <button id="next-question-btn" class="btn-primary" style="display: none;">Next</button>
+                            <span id="quiz-progress" aria-live="polite">Question 1/5</span>
+                            <button id="next-question-btn" class="btn-primary" style="display: none;" aria-label="Go to next question">Next</button>
                         </div>
                     </div>
                     
                     <div id="quiz-results" style="display: none;">
                         <h3 class="score-title">Quiz Completed!</h3>
-                        <div class="score-display">
+                        <div class="score-display" aria-label="Your final score">
                             <span id="final-score">0</span> / 5
                         </div>
                         <p id="score-message"></p>
-                        <button id="restart-quiz-btn" class="btn-secondary">Restart Quiz</button>
+                        <button id="restart-quiz-btn" class="btn-secondary" aria-label="Restart the quiz">Restart Quiz</button>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Predictor Section -->
-            <div class="card glass-card predictor-section">
+            <section class="card glass-card predictor-section" aria-labelledby="predictor-heading">
                 <div class="predictor-header">
-                    <h2>📊 Election Outcome Predictor</h2>
-                    <button id="toggle-explanation-btn" class="btn-icon" title="How it works">ℹ️ How it works</button>
+                    <h2 id="predictor-heading"><span aria-hidden="true">📊</span> Election Outcome Predictor</h2>
+                    <button id="toggle-explanation-btn" class="btn-icon" aria-expanded="false" aria-controls="prediction-explanation" aria-label="Toggle explanation of how prediction works">
+                        <span aria-hidden="true">ℹ️</span> How it works
+                    </button>
                 </div>
                 <p class="section-desc">
                     Enter candidate data to estimate election outcomes based on our weighted model.
@@ -138,7 +141,7 @@
 
                 <!-- Explanation Accordion -->
                 <div id="prediction-explanation" class="explanation-box" style="display: none;">
-                    <h4>How the Prediction Works:</h4>
+                    <h3>How the Prediction Works:</h3>
                     <p>The model uses a weighted formula to calculate a total score for each candidate, which is then normalized into a predicted vote share percentage. The weights are:</p>
                     <ul>
                         <li><strong>Current Vote Estimate:</strong> 50% (Base popularity metric)</li>
@@ -152,93 +155,95 @@
                     <!-- Default 2 candidates -->
                     <div class="candidate-form" id="candidate-1">
                         <div class="form-group">
-                            <label>Candidate / Party Name</label>
-                            <input type="text" class="c-name" placeholder="e.g., Party A" required>
+                            <label for="c-name-1">Candidate / Party Name</label>
+                            <input type="text" id="c-name-1" class="c-name" placeholder="e.g., Party A" required aria-required="true">
                         </div>
                         <div class="grid-2-col">
                             <div class="form-group">
-                                <label>Current Vote Estimate</label>
-                                <input type="number" class="c-current" step="0.01" value="0" required>
+                                <label for="c-current-1">Current Vote Estimate</label>
+                                <input type="number" id="c-current-1" class="c-current" step="0.01" value="0" required aria-required="true">
                             </div>
                             <div class="form-group">
-                                <label>Previous Election Share (%)</label>
-                                <input type="number" class="c-prev" step="0.01" value="0">
+                                <label for="c-prev-1">Previous Election Share (%)</label>
+                                <input type="number" id="c-prev-1" class="c-prev" step="0.01" value="0">
                             </div>
                         </div>
                         <div class="grid-4-col">
                             <div class="form-group">
-                                <label>Campaign Score (0-100)</label>
-                                <input type="number" class="c-camp" step="1" value="50">
+                                <label for="c-camp-1">Campaign Score (0-100)</label>
+                                <input type="number" id="c-camp-1" class="c-camp" step="1" value="50">
                             </div>
                             <div class="form-group">
-                                <label>Youth Support (%)</label>
-                                <input type="number" class="c-youth" step="0.01" value="0">
+                                <label for="c-youth-1">Youth Support (%)</label>
+                                <input type="number" id="c-youth-1" class="c-youth" step="0.01" value="0">
                             </div>
                             <div class="form-group">
-                                <label>Women Support (%)</label>
-                                <input type="number" class="c-women" step="0.01" value="0">
+                                <label for="c-women-1">Women Support (%)</label>
+                                <input type="number" id="c-women-1" class="c-women" step="0.01" value="0">
                             </div>
                             <div class="form-group">
-                                <label>Urban Support (%)</label>
-                                <input type="number" class="c-urban" step="0.01" value="0">
+                                <label for="c-urban-1">Urban Support (%)</label>
+                                <input type="number" id="c-urban-1" class="c-urban" step="0.01" value="0">
                             </div>
                             <div class="form-group">
-                                <label>Rural Support (%)</label>
-                                <input type="number" class="c-rural" step="0.01" value="0">
+                                <label for="c-rural-1">Rural Support (%)</label>
+                                <input type="number" id="c-rural-1" class="c-rural" step="0.01" value="0">
                             </div>
                         </div>
                     </div>
 
                     <div class="candidate-form" id="candidate-2">
                         <div class="form-group">
-                            <label>Candidate / Party Name</label>
-                            <input type="text" class="c-name" placeholder="e.g., Party B" required>
+                            <label for="c-name-2">Candidate / Party Name</label>
+                            <input type="text" id="c-name-2" class="c-name" placeholder="e.g., Party B" required aria-required="true">
                         </div>
                         <div class="grid-2-col">
                             <div class="form-group">
-                                <label>Current Vote Estimate</label>
-                                <input type="number" class="c-current" step="0.01" value="0" required>
+                                <label for="c-current-2">Current Vote Estimate</label>
+                                <input type="number" id="c-current-2" class="c-current" step="0.01" value="0" required aria-required="true">
                             </div>
                             <div class="form-group">
-                                <label>Previous Election Share (%)</label>
-                                <input type="number" class="c-prev" step="0.01" value="0">
+                                <label for="c-prev-2">Previous Election Share (%)</label>
+                                <input type="number" id="c-prev-2" class="c-prev" step="0.01" value="0">
                             </div>
                         </div>
                         <div class="grid-4-col">
                             <div class="form-group">
-                                <label>Campaign Score (0-100)</label>
-                                <input type="number" class="c-camp" step="1" value="50">
+                                <label for="c-camp-2">Campaign Score (0-100)</label>
+                                <input type="number" id="c-camp-2" class="c-camp" step="1" value="50">
                             </div>
                             <div class="form-group">
-                                <label>Youth Support (%)</label>
-                                <input type="number" class="c-youth" step="0.01" value="0">
+                                <label for="c-youth-2">Youth Support (%)</label>
+                                <input type="number" id="c-youth-2" class="c-youth" step="0.01" value="0">
                             </div>
                             <div class="form-group">
-                                <label>Women Support (%)</label>
-                                <input type="number" class="c-women" step="0.01" value="0">
+                                <label for="c-women-2">Women Support (%)</label>
+                                <input type="number" id="c-women-2" class="c-women" step="0.01" value="0">
                             </div>
                             <div class="form-group">
-                                <label>Urban Support (%)</label>
-                                <input type="number" class="c-urban" step="0.01" value="0">
+                                <label for="c-urban-2">Urban Support (%)</label>
+                                <input type="number" id="c-urban-2" class="c-urban" step="0.01" value="0">
                             </div>
                             <div class="form-group">
-                                <label>Rural Support (%)</label>
-                                <input type="number" class="c-rural" step="0.01" value="0">
+                                <label for="c-rural-2">Rural Support (%)</label>
+                                <input type="number" id="c-rural-2" class="c-rural" step="0.01" value="0">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="button-group">
-                    <button id="add-candidate-btn" class="btn-outline">+ Add Candidate</button>
-                    <button id="predict-btn" class="btn-accent">Calculate Prediction</button>
+                    <button id="add-candidate-btn" class="btn-outline" aria-label="Add another candidate">Add Candidate</button>
+                    <button id="predict-btn" class="btn-accent" aria-label="Calculate Prediction">Calculate Prediction</button>
                 </div>
 
                 <!-- Results Section -->
-                <div id="results-container" class="results-container">
+                <div id="results-container" class="results-container" aria-live="polite">
                     <div class="results-header">
-                        <h3>🏆 Prediction Results</h3>
-                        <button id="download-report-btn" class="btn-secondary btn-sm">⬇️ Download Report (.txt)</button>
+                        <h3><span aria-hidden="true">🏆</span> Prediction Results</h3>
+                        <button id="download-report-btn" class="btn-secondary btn-sm" aria-label="Download Prediction Report as text file">
+                            <span aria-hidden="true">⬇️</span> Download Report (.txt)
+                        </button>
                     </div>
                     
                     <p class="winner-announcement"><strong>Predicted Winner:</strong> <span id="predicted-winner"></span> <span id="confidence-level" class="confidence-badge"></span></p>
@@ -246,17 +251,17 @@
 
                     <!-- Chart.js Canvas -->
                     <div class="chart-container" style="position: relative; height:300px; width:100%; margin: 20px 0;">
-                        <canvas id="resultsChart"></canvas>
+                        <canvas id="resultsChart" aria-label="Bar chart showing predicted vote share percentages" role="img"></canvas>
                     </div>
 
                     <div class="table-responsive">
-                        <table id="results-table">
+                        <table id="results-table" aria-label="Table of prediction results">
                             <thead>
                                 <tr>
-                                    <th>Candidate</th>
-                                    <th>Base Est.</th>
-                                    <th>Pred. Share</th>
-                                    <th>Score</th>
+                                    <th scope="col">Candidate</th>
+                                    <th scope="col">Base Est.</th>
+                                    <th scope="col">Pred. Share</th>
+                                    <th scope="col">Score</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -266,13 +271,13 @@
                     </div>
                     
                     <div class="disclaimer">
-                        <strong>⚠️ Disclaimer:</strong> This prediction is only an estimate based on user-entered data and is not an official election result.
+                        <strong><span aria-hidden="true">⚠️</span> Disclaimer:</strong> This prediction is only an estimate based on user-entered data and is not an official election result.
                     </div>
                 </div>
 
-            </div>
+            </section>
         </div>
-    </div>
+    </main>
 
     <footer>
         <p>Built for Hack2skill Challenge 2. No paid APIs used. 100% Free & Offline ready.</p>

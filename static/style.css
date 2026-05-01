@@ -7,7 +7,7 @@
     --bg-gradient-end: #e2e8f0;
     --card-bg: rgba(255, 255, 255, 0.85);
     --text-main: #1e293b;
-    --text-muted: #64748b;
+    --text-muted: #475569; /* Darkened from #64748b for better a11y contrast */
     --border-color: rgba(226, 232, 240, 0.8);
     --success-color: #10b981;
     --warning-color: #f59e0b;
@@ -26,6 +26,13 @@ body {
     color: var(--text-main);
     line-height: 1.6;
     min-height: 100vh;
+}
+
+/* Accessibility: Keyboard Focus Styles */
+*:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: none;
 }
 
 /* Glassmorphism Header */

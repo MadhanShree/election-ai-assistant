@@ -3,3 +3,4 @@ gunicorn==21.2.0
 Werkzeug==3.0.1
 thefuzz==0.22.1
 python-Levenshtein==0.25.0
+pytest==8.1.1

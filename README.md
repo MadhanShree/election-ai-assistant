@@ -63,7 +63,18 @@ The predictor takes numerical inputs from the frontend and applies a hardcoded w
    ```bash
    python app.py
    ```
-5. Open your browser and navigate to `http://localhost:8080`.
+6. Open your browser and navigate to `http://localhost:8080`.
+
+## How to Run Tests
+
+The application includes basic automated tests to verify routing and functionality.
+
+1. Ensure your virtual environment is activated and dependencies are installed.
+2. Run the test suite using pytest:
+   ```bash
+   python -m pytest tests/test_app.py
+   ```
+3. All tests should pass and output a success message.
 
 ## How to Deploy on Render
 
